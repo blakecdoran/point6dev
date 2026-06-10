@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Point 6 — Mobile Software</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0a1628;
+      color: #e8f0f8;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 48px;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(10, 22, 40, 0.92);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+    .nav-logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.05em;
+    }
+    .nav-logo span { color: #4db6e5; }
+    nav a {
+      color: #a0b8cc;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: #fff; }
+    .nav-links { display: flex; gap: 32px; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      background: radial-gradient(ellipse at 50% 40%, rgba(30, 111, 165, 0.18) 0%, transparent 70%);
+    }
+    .hero-tag {
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #4db6e5;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: #fff;
+      max-width: 800px;
+      margin-bottom: 24px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, #4db6e5, #1e9ed4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: #a0b8cc;
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #1e6fa5;
+      color: #fff;
+      text-decoration: none;
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .hero-cta:hover { background: #1a5f8e; transform: translateY(-1px); }
+
+    /* DIVIDER */
+    .section-divider {
+      width: 48px;
+      height: 3px;
+      background: #1e6fa5;
+      border-radius: 2px;
+      margin: 0 auto 24px;
+    }
+
+    /* PRODUCTS */
+    .products {
+      padding: 100px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .section-header h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .section-header p { color: #a0b8cc; font-size: 1.05rem; }
+
+    .product-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 56px;
+    }
+    @media (max-width: 720px) {
+      .product-card { grid-template-columns: 1fr; padding: 32px 24px; gap: 32px; }
+    }
+    .product-badge {
+      display: inline-block;
+      background: rgba(77, 182, 229, 0.12);
+      color: #4db6e5;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .product-card h3 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .product-card p {
+      color: #a0b8cc;
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: #c8dce8;
+      font-size: 0.95rem;
+    }
+    .feature-list li::before {
+      content: "✓";
+      color: #4db6e5;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .app-store-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+      color: #0a1628;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: opacity 0.2s;
+    }
+    .app-store-btn:hover { opacity: 0.9; }
+
+    .product-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .product-icon-large {
+      width: 180px;
+      height: 180px;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #0d3555, #1e6fa5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      box-shadow: 0 24px 64px rgba(10, 22, 40, 0.6), 0 0 0 1px rgba(255,255,255,0.06);
+    }
+
+    /* ABOUT */
+    .about {
+      padding: 100px 24px;
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .about-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .about-inner h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+    .about-inner p {
+      color: #a0b8cc;
+      line-height: 1.8;
+      font-size: 1.05rem;
+      margin-bottom: 16px;
+    }
+
+    /* CONTACT */
+    .contact {
+      padding: 100px 24px;
+      text-align: center;
+    }
+    .contact h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .contact p { color: #a0b8cc; margin-bottom: 32px; font-size: 1.05rem; }
+    .contact-email {
+      display: inline-block;
+      color: #4db6e5;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(77, 182, 229, 0.3);
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+    .contact-email:hover { border-color: #4db6e5; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 32px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    footer p { color: #4a6070; font-size: 0.85rem; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a {
+      color: #4a6070;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: #a0b8cc; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">Point<span>6</span></div>
+    <div class="nav-links">
+      <a href="#products">Products</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-tag">Mobile Software</div>
+    <h1>Apps built for <em>the real world</em></h1>
+    <p>Point 6 builds mobile software for people who spend their time outdoors — tools that are useful on the water, not just on a screen.</p>
+    <a href="#products" class="hero-cta">See our work</a>
+  </section>
+
+  <section class="products" id="products">
+    <div class="section-header">
+      <div class="section-divider"></div>
+      <h2>Our Products</h2>
+      <p>Purpose-built apps for the boating community</p>
+    </div>
+
+    <div class="product-card">
+      <div>
+        <span class="product-badge">Available on the App Store</span>
+        <h3>ClearDepth</h3>
+        <p>Water safety for boaters. ClearDepth shows you community-reported hazards on lakes across the US, adjusts their severity based on real-time water levels, and alerts you when you're approaching something dangerous.</p>
+        <ul class="feature-list">
+          <li>Community hazard reporting on 150+ lakes</li>
+          <li>Live USGS water level data</li>
+          <li>Proximity alerts near flagged hazards</li>
+          <li>Per-lake community chat</li>
+        </ul>
+        <a href="https://apps.apple.com/app/cleardepth/id6774462331" class="app-store-btn">
+          ⬇ Download on the App Store
+        </a>
+      </div>
+      <div class="product-visual">
+        <div class="product-icon-large">⚓</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="about-inner">
+      <div class="section-divider"></div>
+      <h2>About Point 6</h2>
+      <p>Point 6 is a mobile software company focused on building practical tools for people who work and play outdoors. We believe the best apps are the ones that get out of the way — fast, reliable, and useful when it matters.</p>
+      <p>We're based in the United States and publish our apps on the Apple App Store.</p>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="section-divider"></div>
+    <h2>Get in touch</h2>
+    <p>Questions, feedback, or lake requests — we'd love to hear from you.</p>
+    <a href="mailto:cleardepth@point6dev.com" class="contact-email">cleardepth@point6dev.com</a>
+  </section>
+
+  <footer>
+    <p>© 2026 Point 6. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="https://blakedoran.github.io/cleardepth-privacy">Privacy Policy</a>
+      <a href="mailto:cleardepth@point6dev.com">Contact</a>
+    </div>
+  </footer>
+
+</body>
+</html>

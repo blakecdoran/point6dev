@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClearDepth — Submerged Hazard Alert</title>
+
+  <!-- Open Graph — iMessage / social preview card -->
+  <meta property="og:title" content="⚠️ Submerged Hazard Tagged on ClearDepth" />
+  <meta property="og:description" content="A boater tagged a submerged hazard near you. Open ClearDepth to see the exact location, current depth, and community notes. Stay safe on the water." />
+  <meta property="og:image" content="https://point6dev.com/cleardepth-icon.png" />
+  <meta property="og:url" content="https://point6dev.com/hazard/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="ClearDepth" />
+
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="⚠️ Submerged Hazard Tagged on ClearDepth" />
+  <meta name="twitter:description" content="A boater tagged a submerged hazard near you. Open ClearDepth to see the location and current depth." />
+  <meta name="twitter:image" content="https://point6dev.com/cleardepth-icon.png" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0a1628;
+      color: #d4e4f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+    }
+    .logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 18px;
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    p {
+      font-size: 1rem;
+      color: #6a8aaa;
+      max-width: 360px;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: #0e8a7a;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 14px 32px;
+      border-radius: 12px;
+      text-decoration: none;
+      margin-bottom: 16px;
+    }
+    .btn-secondary {
+      display: block;
+      color: #6a8aaa;
+      font-size: 0.875rem;
+      text-decoration: underline;
+      margin-top: 8px;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(255,128,96,0.15);
+      color: #ff8060;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+  <img src="https://point6dev.com/cleardepth-icon.png" alt="ClearDepth" class="logo" />
+  <span class="badge">⚠ Hazard Alert</span>
+  <h1>Submerged Hazard Tagged</h1>
+  <p>
+    A fellow boater tagged a submerged hazard on this lake.
+    Open ClearDepth to see the exact location, current depth, and community notes.
+  </p>
+
+  <a id="open-app" href="#" class="btn-primary">Open in ClearDepth</a>
+  <a href="https://apps.apple.com/app/cleardepth/id6774462331" class="btn-secondary">Don't have the app? Download ClearDepth</a>
+
+  <script>
+    var ua = navigator.userAgent || '';
+    var isIOS = /iPhone|iPad|iPod/i.test(ua);
+    var isAndroid = /Android/i.test(ua);
+
+    if (isIOS) {
+      window.location.replace('https://apps.apple.com/app/cleardepth/id6774462331');
+    } else if (isAndroid) {
+      window.location.replace('https://play.google.com/store/apps/details?id=com.cleardepth.app');
+    } else {
+      // Desktop: wire up the deep link button using the hazard ID from the URL
+      var pathParts = window.location.pathname.replace(/\/$/, '').split('/');
+      var lastSegment = pathParts[pathParts.length - 1];
+      var hazardId = (lastSegment && lastSegment !== 'hazard') ? lastSegment : null;
+      if (!hazardId) {
+        hazardId = new URLSearchParams(window.location.search).get('id');
+      }
+      if (hazardId) {
+        document.getElementById('open-app').href = 'cleardepth://hazard/' + hazardId;
+      }
+    }
+  </script>
+</body>
+</html>

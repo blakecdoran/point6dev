@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["2TWV3HMQ8H.com.cleardepth.app"],
+        "components": [
+          {
+            "/": "/hazard/*",
+            "comment": "ClearDepth hazard detail"
+          }
+        ]
+      }
+    ]
+  }
+}

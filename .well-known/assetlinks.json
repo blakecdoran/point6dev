@@ -1,0 +1,12 @@
+[
+    {
+          "relation": ["delegate_permission/common.handle_all_urls"],
+          "target": {
+                  "namespace": "android_app",
+                  "package_name": "com.cleardepth.app",
+                  "sha256_cert_fingerprints": [
+                            "A1:27:DF:E0:FC:DB:23:31:C2:74:04:B3:E3:5A:B8:EA:07:9B:D7:12:8A:35:4E:01:9A:2F:E6:2A:54:AD:61:22"
+                  ]
+          }
+    }
+]
